@@ -1,11 +1,11 @@
 {
-	"name": "websocket-server",
+	"name": "queque-app",
 	"version": "1.0.0",
-	"description": "web server with sockets",
+	"description": "A queque app made with node and sockets",
 	"main": "app.js",
 	"type": "module",
 	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1"
+		"start": "node app.js"
 	},
 	"keywords": [
 		"sockets"

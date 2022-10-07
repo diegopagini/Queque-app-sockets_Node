@@ -1,59 +1,40 @@
 /** @format */
 
-// HTML references.
+// Referencias del HTML
 const lblOnline = document.querySelector('#lblOnline');
 const lblOffline = document.querySelector('#lblOffline');
-const txtMsg = document.querySelector('#txtMsg');
-const btnSend = document.querySelector('#btnSend');
+const txtMensaje = document.querySelector('#txtMensaje');
+const btnEnviar = document.querySelector('#btnEnviar');
 
-const socket = io(); // To start connection with socket.
+const socket = io();
 
-/**
- * connect event.
- */
 socket.on('connect', () => {
-	console.log('Connected');
+	// console.log('Conectado');
 
 	lblOffline.style.display = 'none';
-	lblOnline.style.display = 'inline-block';
+	lblOnline.style.display = '';
 });
 
-/**
- * disconnect event.
- */
 socket.on('disconnect', () => {
-	console.log('Disconnected');
+	// console.log('Desconectado del servidor');
 
-	lblOffline.style.display = 'inline-block';
 	lblOnline.style.display = 'none';
+	lblOffline.style.display = '';
 });
 
-/**
- * To listen a custom event from the server with sockets.
- */
-socket.on('send-new-msg', (payload) => {
-	// 'send-new-msg' is the name of the event.
-	console.log({ payload });
+socket.on('enviar-mensaje', (payload) => {
+	console.log(payload);
 });
 
-/**
- * Custom event.
- */
-btnSend.addEventListener('click', () => {
-	const msg = txtMsg.value;
+btnEnviar.addEventListener('click', () => {
+	const mensaje = txtMensaje.value;
 	const payload = {
-		msg,
-		id: 'abc123',
-		date: new Date().getTime(),
+		mensaje,
+		id: '123ABC',
+		fecha: new Date().getTime(),
 	};
 
-	// "emit" is used to create a custom event. "on" is to listen that event.
-	socket.emit(
-		'send-msg', // "send-msg" is the name of the event.
-		payload, // payload is the data to send.
-		(id) => {
-			// The third argument is a callback
-			console.log(`From server: `, id);
-		}
-	);
+	socket.emit('enviar-mensaje', payload, (id) => {
+		console.log('Desde el server', id);
+	});
 });

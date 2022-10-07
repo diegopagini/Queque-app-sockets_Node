@@ -17,29 +17,26 @@
 	</head>
 
 	<body class="container">
-		<h1 class="mt-5">Programa de Colas</h1>
-
+		<h1 class="mt-5">Escritorio</h1>
+		<hr />
 		<div class="row">
-			<div class="col-6">
-				<a class="btn btn-primary" href="publico.html">Pantalla publica</a>
-				<a class="btn btn-secondary" href="nuevo-ticket.html">Crear Tickets</a>
+			<div class="col-8">
+				<h4>Atendiendo a <small class="text-primary">....</small></h4>
+
+				<button class="btn btn-primary mt-5">Atender siguiente ticket</button>
 			</div>
 
-			<div class="col-6">
-				<form action="escritorio.html">
-					<input
-						name="escritorio"
-						type="text"
-						class="form-control"
-						placeholder="Escritorio"
-						autofocus
-						required
-					/>
+			<div class="col-4 text-center">
+				<h4>En cola</h4>
 
-					<br />
-					<button type="submit" class="btn btn-primary">Ingresar</button>
-				</form>
+				<div class="alert alert-info mt-2">
+					<span>Ya no hay más tickets</span>
+				</div>
+
+				<h1 id="lblPendientes">10</h1>
 			</div>
 		</div>
+
+		<script src="./js/escritorio.js"></script>
 	</body>
 </html>
