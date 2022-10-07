@@ -2,6 +2,13 @@
 import fs from 'fs';
 import { readFile } from 'fs/promises';
 
+class Ticket {
+	constructor(number, desk) {
+		this.number = number;
+		this.desk = desk;
+	}
+}
+
 export class TicketControl {
 	constructor() {
 		this.last = 0;
@@ -33,7 +40,33 @@ export class TicketControl {
 		} else this.saveDB();
 	}
 
-	async saveDB() {
+	saveDB() {
 		fs.writeFileSync('db/data.json', JSON.stringify(this.toJson));
+	}
+
+	next() {
+		this.last += 1;
+		this.tickets.push(new Ticket(this.last, null));
+
+		this.saveDB();
+
+		return `Ticket ${this.number}`;
+	}
+
+	attendTicket(desk) {
+		// If no tickets.
+		if (this.tickets.length === 0) return null;
+
+		const ticket = this.tickets.shift(); // First ticket on the list.
+
+		ticket.desk = desk;
+
+		this.lastFour.unshift(ticket);
+
+		if (this.lastFour.length > 4) this.lastFour.splice(-1, 1); // To remove the last one.
+
+		this.saveDB();
+
+		return ticket;
 	}
 }
