@@ -18,4 +18,25 @@ export const socketController = (socket) => {
 		const next = ticketControl.next();
 		callback(next); // callback is the return to frontend.
 	});
+
+	socket.on('attend-ticket', ({ desk }, callback) => {
+		if (!desk)
+			return callback({
+				ok: false,
+				msg: 'Desk is required',
+			});
+
+		const ticket = ticketControl.attendTicket(desk);
+
+		if (!ticket) {
+			return callback({
+				ok: false,
+				msg: 'There is no more tickets.',
+			});
+		} else
+			callback({
+				ok: true,
+				ticket,
+			});
+	});
 };

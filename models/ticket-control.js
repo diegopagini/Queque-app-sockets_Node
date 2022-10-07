@@ -40,8 +40,8 @@ export class TicketControl {
 		} else this.saveDB();
 	}
 
-	saveDB() {
-		fs.writeFileSync('db/data.json', JSON.stringify(this.toJson));
+	async saveDB() {
+		await fs.writeFileSync('db/data.json', JSON.stringify(this.toJson));
 	}
 
 	next() {
