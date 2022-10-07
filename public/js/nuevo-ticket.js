@@ -8,6 +8,11 @@ const socket = io();
 
 socket.on('connect', () => {
 	btn.disabled = false;
+
+	// Every custom event must be inside the connect event.
+	socket.on('last-ticket', (payload) => {
+		lblNuevoTicket.innerText = `Ticket ${payload || 0}`;
+	});
 });
 
 socket.on('disconnect', () => {
