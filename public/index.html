@@ -1,0 +1,41 @@
+<!-- @format -->
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link
+			href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+			rel="stylesheet"
+			integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
+			crossorigin="anonymous"
+		/>
+		<title>Socket Client</title>
+	</head>
+	<body class="container">
+		<h1 class="mt-2">Socket Client</h1>
+		<hr />
+
+		<p>
+			Server status:
+			<strong id="lblOnline" class="text-success">Online</strong>
+			<strong id="lblOffline" class="text-danger">Offline</strong>
+		</p>
+
+		<div class="row">
+			<div class="col">
+				<input type="text" id="txtMsg" class="form-control" />
+			</div>
+
+			<div class="col">
+				<button id="btnSend" class="btn btn-primary">Send</button>
+			</div>
+		</div>
+
+		<!-- Local Socket Server -->
+		<script src="./socket.io/socket.io.js"></script>
+		<script src="./js/socket-client.js"></script>
+	</body>
+</html>
