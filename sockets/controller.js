@@ -9,6 +9,7 @@ export const socketController = (socket) => {
 	 */
 	socket.emit('last-ticket', ticketControl.last);
 	socket.emit('current-state', ticketControl.lastFour);
+	socket.emit('pending-tickets', ticketControl.tickets.length);
 
 	/**
 	 * The first parameter is the name of the event,
@@ -18,6 +19,7 @@ export const socketController = (socket) => {
 	socket.on('next-ticket', (payload, callback) => {
 		const next = ticketControl.next();
 		callback(next); // callback is the return to frontend.
+		socket.broadcast.emit('pending-tickets', ticketControl.tickets.length); // To everyone instead of the client.
 	});
 
 	socket.on('attend-ticket', ({ desk }, callback) => {
@@ -29,14 +31,16 @@ export const socketController = (socket) => {
 
 		const ticket = ticketControl.attendTicket(desk);
 
-		socket.broadcast.emit('current-state', ticketControl.lastFour);
+		socket.broadcast.emit('current-state', ticketControl.lastFour); // "broadcast" to emit to all users.
+		socket.emit('pending-tickets', ticketControl.tickets.length); // To the client.
+		socket.broadcast.emit('pending-tickets', ticketControl.tickets.length); // To everyone instead of the client.
 
-		if (!ticket) {
+		if (!ticket)
 			callback({
 				ok: false,
 				msg: 'There is no more tickets.',
 			});
-		} else
+		else
 			callback({
 				ok: true,
 				ticket,

@@ -5,6 +5,7 @@ const lblDesk = document.querySelector('#desk');
 const btn = document.querySelector('button');
 const currentTicket = document.querySelector('small');
 const alert = document.querySelector('.alert');
+const pendingTickets = document.querySelector('#lblPendientes');
 
 // Params
 const searchParams = new URLSearchParams(window.location.search);
@@ -23,8 +24,14 @@ alert.style.display = 'none';
 
 socket.on('connect', () => {
 	btn.disabled = false;
+});
 
-	// Every custom event must be inside the connect event.
+socket.on('pending-tickets', (pending) => {
+	if (pending === 0) pendingTickets.style.display = 'none';
+	else {
+		pendingTickets.style.display = '';
+		pendingTickets.innerText = pending;
+	}
 });
 
 socket.on('disconnect', () => {
@@ -38,8 +45,6 @@ btn.addEventListener('click', () => {
 	 * The third one is the callback with the response from the server.
 	 */
 	socket.emit('attend-ticket', { desk }, ({ ok, ticket }) => {
-		console.log(ok, ticket);
-
 		if (!ok) {
 			currentTicket.innerText = `Nadie`;
 			alert.style.display = 'block';

@@ -13,7 +13,7 @@ const lblEscritorio4 = document.querySelector('#lblEscritorio4');
 const socket = io();
 
 socket.on('current-state', (payload) => {
-	const audio = new Audio('./audio/new-ticket.mp3');
+	const audio = new Audio('./audio/new-ticket.mp3'); // To play audio files.
 	audio.play();
 
 	const [ticket1, ticket2, ticket3, ticket4] = payload;
