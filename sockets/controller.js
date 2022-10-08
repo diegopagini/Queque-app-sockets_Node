@@ -8,6 +8,7 @@ export const socketController = (socket) => {
 	 * When the socket connects.
 	 */
 	socket.emit('last-ticket', ticketControl.last);
+	socket.emit('current-state', ticketControl.lastFour);
 
 	/**
 	 * The first parameter is the name of the event,
@@ -28,8 +29,10 @@ export const socketController = (socket) => {
 
 		const ticket = ticketControl.attendTicket(desk);
 
+		socket.broadcast.emit('current-state', ticketControl.lastFour);
+
 		if (!ticket) {
-			return callback({
+			callback({
 				ok: false,
 				msg: 'There is no more tickets.',
 			});
